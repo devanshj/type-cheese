@@ -1,4 +1,4 @@
-# typelevel-ts (WIP)
+# type-cheese (WIP)
 
 TypeScript types to do things like...
 
