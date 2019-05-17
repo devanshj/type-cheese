@@ -1,0 +1,1 @@
+tsc --noEmit && echo "All tests passed"
