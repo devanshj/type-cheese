@@ -16,4 +16,4 @@ type filtered = Filter<[1, 2, 3, 1], 1>;
 // type filtered is [2, 3]
 ```
 
-... and a lot more. Checkout code and `/examples`.
+... and a lot more.
