@@ -1,7 +1,6 @@
 import { _Shift } from "./shift";
 import { TypeOf, AreEqual } from "../misc";
 import { _Unshift } from "./unshift";
-import { ForceTuple } from "./force-tuple";
 
 type $Filter<A extends any[], X> =
 	AreEqual<A,[]> extends true
