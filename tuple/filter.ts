@@ -1,23 +1,25 @@
-import { _Shift } from "./shift";
-import { TypeOf, AreEqual } from "../misc";
+import { TypeOf } from "../misc";
 import { _Unshift } from "./unshift";
+import { _Shift } from "./shift";
 
-type $Filter<A extends any[], X> =
-	AreEqual<A,[]> extends true
+type $Filter<A extends any[], P extends boolean[]> =
+	A extends []
 		? { type: A }
-		: AreEqual<A[0], X> extends true
-			? { type: TypeOf<$Filter<_Shift<A>, X>> }
+		: P[0] extends false
+			? { type: TypeOf<$Filter<_Shift<A>, _Shift<P>>> }
 			: { type:
 				_Unshift<
-					TypeOf<$Filter<_Shift<A>, X>>,
+					TypeOf<$Filter<_Shift<A>, _Shift<P>>>,
 					A[0]
 				>
 			};
 
-export type Filter<A extends any[], X> = TypeOf<$Filter<A, X>>
+export type Filter<A extends any[], P extends boolean[]> =
+	TypeOf<$Filter<A, P>>
 
-
-export type _Filter<A, X> =
+export type _Filter<A, P> = 
 	A extends any[]
-		? Filter<A, X>
+		? P extends any[]
+			? TypeOf<$Filter<A, P>>
+			: never
 		: never;

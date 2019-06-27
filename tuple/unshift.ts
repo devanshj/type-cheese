@@ -1,18 +1,14 @@
 export type Unshift<A extends any[], X> =
-((x: X, ...a: A) => void) extends ((...xa: infer XA) => void)
-    ? XA
-    : never;
+	((x: X, ...a: A) => void) extends ((...xa: infer XA) => void)
+		? XA
+		: never;
 
-/*
 export type _Unshift<A, X> =
     A extends any[]
         ? Unshift<A, X>
         : never;
-// above version causes 'type' is referenced directly or indirectly in its own type annotation.ts(2502)
-// which is not reproducible
-*/
 
-export type _Unshift<A, X> =
+export type _Unshift2<A, X> =
     A extends [] ? [X] :
     A extends [infer A0] ? [X, A0] :
     A extends [infer A0, infer A1] ? [X, A0, A1] :

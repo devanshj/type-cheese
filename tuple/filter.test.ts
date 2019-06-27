@@ -1,22 +1,27 @@
-import { AreEqual, AssertTrue } from "../misc";
-import { Filter, _Filter } from "./filter";
+import { Filter } from "./filter";
+import { AssertTrue, AreEqual } from "../misc";
+import { Unshift, _Unshift2 } from "./unshift";
+import { AssertArray } from "./assert-array";
 
-type A = "a";
-type B = { b: "b" };
-type C = [];
+type Todos = [
+	{
+		name: "abc",
+		done: true
+	}, {
+		name: "pqr",
+		done: false
+	}
+];
 
-type tests = [
-    AreEqual<Filter<[1, 2, 1, 3], 1>, [2, 3]>,
-    AreEqual<Filter<[1, 2, 1, 3], 0>, [1, 2, 1, 3]>,
-    AreEqual<Filter<[[1], [2]], [1]>, [[2]]>,
-    AreEqual<Filter<[A, B, C, B], C>, [A, B, B]>,
+type Predicates = AssertArray<{
+	[I in keyof Todos]:
+		Todos[I] extends { done: boolean }
+			? Todos[I]["done"] :
+		I extends "length"
+			? Todos[I] :
+		never
+}>
 
-    AreEqual<_Filter<[1, 2, 1, 3], 1>, [2, 3]>,
-    AreEqual<_Filter<[1, 2, 1, 3], 0>, [1, 2, 1, 3]>,
-    AreEqual<_Filter<[[1], [2]], [1]>, [[2]]>,
-    AreEqual<_Filter<[A, B, C, B], C>, [A, B, B]>,
+type CompletedTodos = Filter<Todos, Predicates>
 
-    AreEqual<_Filter<"foo", [1]>, never>,
-    AreEqual<_Filter<B, C>, never>
-]
-type UnshiftWorks = AssertTrue<tests[number]>
+// TODO : doesn't work for uncompleted todos, in other words doesn't work for complex & deep predicates
